@@ -1,0 +1,34 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background-color: blueviolet;
+    display: flex;
+    height: 100vh;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+h1{
+    text-align: center;
+    color: snow;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+#game-board{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    background-color: white;
+}
+
+#cell{
+    height: 75px;
+    width: 75px;
+    border: 2px solid;
+}
