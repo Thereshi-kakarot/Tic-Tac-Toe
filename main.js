@@ -10,4 +10,40 @@
 //6. Check for tie - Every cell is filled but no winner.
 //7. End game - Stops the game when one of players win or when it is a tie.
 
- 
+ const createGame = (function() {
+
+    //starting with private variables and functions
+
+    const gameBoard = [ "", "", "", "", "", "", "", "", "",];
+    const winningConditions = [
+        [0,1,2], [3,4,5],[6,7,8],
+        [0,3,6], [1,5,7],[2,5,8],
+        [0,4,8], [2,4,6]
+    ];
+    let currentPlayer = "X";
+    let winner = null;
+    let isRunning = false;
+
+    function checkWin(){
+        for(let combo of winningConditions){
+            if(gameBoard[combo[0]] === currentPlayer &&
+                gameBoard[combo[1]] === currentPlayer &&
+                gameBoard[combo[2]] === currentPLayer
+            ){
+                return true;
+            }
+        }
+        return false;
+    }
+    function checkDraw(){
+        for(let cell of gameBoard){
+            if(cell === ""){
+                return false
+            }
+        }
+        return true;
+    }
+    return {
+
+    }
+ })()
