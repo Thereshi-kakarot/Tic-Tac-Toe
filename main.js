@@ -44,6 +44,10 @@
         return true;
     }
     return {
-
+        makeMove(position){
+            if(gameBoard[position] !== ""){
+                return false;
+            }
+        }
     }
  })()
