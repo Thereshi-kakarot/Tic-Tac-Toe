@@ -100,11 +100,51 @@ const game = createGame;
 const currentPlayerDisplay = document.getElementById("current-player-display");
 const cells = document.querySelectorAll(".cell");
 const resetBtn = document.getElementById("reset-btn");
+const gameResult = document.getElementById("game-result");
 
 cells.forEach(cell => {
-    cell.addEventListener("click," ()=> {
+    cell.addEventListener("click", ()=> {
         const position = cell.dataset.position;
         const success = board[position];
+
+        if(success){
+            updateDisplay();
+        } else{
+            console.log(`${game.getPlayer} You are making an invalid move`);
+        }
     });
 });
+
+function updateDisplay(){
+    const board = game.getBoard();
+
+    cells.forEach((cell, index)=> {
+        cell.textContent = board[index];
+    });
+
+    if(game.isGameOver){
+        const winner = game.getWinner();
+        if(winner){
+            gameResult.textContent = `${winner} Wins!`
+        }else{
+            gameResult.textContent = `Draw!`;
+        }
+
+        cells.forEach(cell => cell.disabled = true);
+
+    }else{
+        currentPlayerDisplay.textContent = `${game.getPlayer}'s turn`;
+        gameResult.textContent = "";
+    }
+}
+
+resetBtn.addEventListener("click", ()=> {
+    game.reset();
+    cells.forEach(cell => {
+        gameResult.textContent = "";
+
+        updateDisplay();
+    });
+});
+updateDisplay();
 
