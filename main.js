@@ -122,7 +122,7 @@ function updateDisplay(){
         cell.textContent = board[index];
     });
 
-    if(game.isGameOver){
+    if(game.isGameOver()){
         const winner = game.getWinner();
         if(winner){
             gameResult.textContent = `${winner} Wins!`
@@ -142,9 +142,9 @@ resetBtn.addEventListener("click", ()=> {
     game.reset();
     cells.forEach(cell => {
         gameResult.textContent = "";
-
-        updateDisplay();
+        cell.disabled = false;
     });
+      updateDisplay();
 });
 updateDisplay();
 
