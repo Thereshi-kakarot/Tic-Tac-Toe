@@ -13,7 +13,7 @@
 
 const createGame = (function() {
 
-    const gameBoard = ["", "", "", "", "", "", "", "", "",];
+    let gameBoard = ["", "", "", "", "", "", "", "", "",];
     let currentPlayer = "X";
     let gameOver = false;
     
@@ -89,10 +89,22 @@ const createGame = (function() {
             return gameOver;
         },
         reset(){
-        const gameBoard = ["", "", "", "", "", "", "", "", "",];
-        let currentPlayer = "X";
-        let gameOver = false; 
+        gameBoard = ["", "", "", "", "", "", "", "", "",];
+        currentPlayer = "X";
+        gameOver = false; 
         }
     }
-})()
+})();
+
+const game = createGame;
+const currentPlayerDisplay = document.getElementById("current-player-display");
+const cells = document.querySelectorAll(".cell");
+const resetBtn = document.getElementById("reset-btn");
+
+cells.forEach(cell => {
+    cell.addEventListener("click," ()=> {
+        const position = cell.dataset.position;
+        const success = board[position];
+    });
+});
 
