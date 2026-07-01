@@ -16,10 +16,11 @@ const createGame = (function() {
     let gameBoard = ["", "", "", "", "", "", "", "", "",];
     let currentPlayer = "X";
     let gameOver = false;
+    let winner = null;
     
     const winningConditions = [
         [0,1,2],[3,4,5],[6,7,8], //horizontals
-        [0,3,6],[1,4,7],[2,6,8], //verticals
+        [0,3,6],[1,4,7],[2,5,8], //verticals
         [0,4,8],[2,4,6] //diagonals
     ];
 
@@ -38,7 +39,7 @@ const createGame = (function() {
 
     function checkDraw(){
         for(let cell of gameBoard){
-            if(cell !== ""){
+            if(cell === ""){
                 return false;
             }
         }
@@ -71,6 +72,7 @@ const createGame = (function() {
             }
 
             currentPlayer = currentPlayer === "X"? "O" : "X";
+            return true;
         },
 
         getGameBoard(){
@@ -80,7 +82,7 @@ const createGame = (function() {
             return winner;
         },
         getDraw(){
-            return checkDraw;
+            return checkDraw();
         },
         getPlayer(){
             return currentPlayer;
@@ -89,10 +91,64 @@ const createGame = (function() {
             return gameOver;
         },
         reset(){
-        let gameBoard = ["", "", "", "", "", "", "", "", "",];
-        let currentPlayer = "X";
-        let gameOver = false; 
+        gameBoard = ["", "", "", "", "", "", "", "", "",];
+        currentPlayer = "X";
+        gameOver = false; 
+        winner = null;
         }
     }
 })();
 
+const game = createGame;
+const cells = document.querySelectorAll(".cell");
+const gameResult = document.getElementById("game-result");
+const currentPlayerDisplay = document.getElementById("current-player-display");
+const resetBtn = document.getElementById("reset-btn");
+
+cells.forEach((cell) => {
+        cell.addEventListener("click", ()=> {
+            const position = cell.dataset.position;
+            const success = game.makeMove(position);
+
+            if(success){
+                updateDisplay();
+            }else{
+                console.log("You are making the wrong move!");
+            }
+        });
+    });
+function updateDisplay(){
+
+    const board = game.getGameBoard();
+
+   
+
+    cells.forEach((cell, index)=> {
+        cell.textContent = board[index];
+    });
+
+    if(game.isGameOver()){
+        const winner = game.getWinner();
+
+        if(winner){
+            gameResult.textContent = `${winner} Wins!`;
+        }else{
+            gameResult.textContent = `It's Draw!`;
+        }
+        cells.forEach(cell=> {cell.disabled = true})
+    }else{
+        currentPlayerDisplay.textContent = `${game.getPlayer()}'s turn`;
+        gameResult.textContent = "";
+    }
+}
+ 
+resetBtn.addEventListener("click", ()=> {
+    game.reset();
+    cells.forEach(cell=> {
+        cell.disabled = false;
+    });
+    gameResult.textContent = "";
+        updateDisplay();
+});
+
+updateDisplay();
